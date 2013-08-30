@@ -9,9 +9,6 @@ except ImportError:
 import os
 import logging
 
-
-
-
 class MetricsError(Exception):
     def __init__(self, msg, underlying_error):
         self.msg = str(msg)
@@ -21,7 +18,6 @@ class MetricsError(Exception):
         return "%s (%s)" % (self.msg, self.underlying_error)
 
 class Backend(object):
-
     def __init__(self, config, logger=logging):
         self.config = config
         self.logger = logger
@@ -84,16 +80,15 @@ class Backend(object):
         self.logger.debug("updating targets")
         s_metrics.update_targets(metrics)
 
-
 def get_action_on_rules_match(rules, subject):
     '''
-rules being a a list of tuples, and each tuple having 2 elements, like:
-{'plugin': ['diskspace', 'memory'], 'what': 'bytes'},
-action
+    rules being a a list of tuples, and each tuple having 2 elements, like:
+    {'plugin': ['diskspace', 'memory'], 'what': 'bytes'},
+    action
 
-the dict is a list of conditions that must match (and). if the value is an iterable, those count as OR
-action can be whatever you want. the actions for all matching rules are yielded.
-'''
+    the dict is a list of conditions that must match (and). if the value is an iterable, those count as OR
+    action can be whatever you want. the actions for all matching rules are yielded.
+    '''
     for (match_rules, action) in rules:
         rule_match = True
         for (tag_k, tag_v) in match_rules.items():
